@@ -1,0 +1,8 @@
+models: [mobilenet_v2]
+runtimes: [fake]
+devices:
+  - name: local
+    kind: local
+precisions: [fp32, int8]
+threads: [1, 2, 4]
+
