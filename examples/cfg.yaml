@@ -4,5 +4,5 @@ devices:
   - name: local
     kind: local
 precisions: [fp32, int8]
-threads: [1, 2, 4]
+threads: [1, 2, 4, 16]
 

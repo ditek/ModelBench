@@ -9,19 +9,18 @@ from modelbench.config import Config
 
 
 class Job(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True)
+    model_config = ConfigDict(extra='forbid', frozen=True)
     model: str
     runtime: str
     device: str
-    precision: Literal["fp32", "int8"]
+    precision: Literal['fp32', 'int8']
     threads: int = Field(gt=0)
 
     @property
     def id(self) -> str:
         d = self.model_dump_json()
         s = json.dumps(d, sort_keys=True)
-        print(s)
-        return hashlib.sha256(s.encode("utf-8")).hexdigest()[:12]
+        return hashlib.sha256(s.encode('utf-8')).hexdigest()[:12]
 
 
 def expand(conf: Config) -> list[Job]:

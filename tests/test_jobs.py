@@ -18,13 +18,13 @@ def test_id_format():
 
 def test_expand():
     conf = Config(
-        models=["mobilenet_v2"],
-        runtimes=["fake", "real"],
+        models=['mobilenet_v2'],
+        runtimes=['fake', 'real'],
         devices=[
-            DeviceConfig(name="local", kind="local"),
-            DeviceConfig(name="local2", kind="local"),
+            DeviceConfig(name='local', kind='local'),
+            DeviceConfig(name='local2', kind='local'),
         ],
-        precisions=["fp32", "int8"],
+        precisions=['fp32', 'int8'],
         threads=[1, 2, 4],
     )
     jobs = expand(conf)

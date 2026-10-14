@@ -6,13 +6,13 @@ def run_jobs(jobs: list[Job], device, runtime, run_id: str) -> list[Result]:
     meta = device.probe()
     results = []
     for job in jobs:
-        if job.threads > meta["cores"]:
+        if job.threads > meta['cores']:
             results.append(
                 Result(
                     run_id=run_id,
                     job=job,
-                    status="skipped",
-                    reason=f"requested {job.threads} threads, device has {meta['cores']} cores",
+                    status='skipped',
+                    reason=f'requested {job.threads} threads, device has {meta["cores"]} cores',
                     device_metadata=meta,
                 )
             )
@@ -23,7 +23,7 @@ def run_jobs(jobs: list[Job], device, runtime, run_id: str) -> list[Result]:
                 Result(
                     run_id=run_id,
                     job=job,
-                    status="ok",
+                    status='ok',
                     latencies_ms=latencies,
                     device_metadata=meta,
                 )
@@ -33,7 +33,7 @@ def run_jobs(jobs: list[Job], device, runtime, run_id: str) -> list[Result]:
                 Result(
                     run_id=run_id,
                     job=job,
-                    status="failed",
+                    status='failed',
                     reason=str(e),
                     device_metadata=meta,
                 )

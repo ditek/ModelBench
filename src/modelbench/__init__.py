@@ -1,2 +1,2 @@
 def main() -> None:
-    print("Hello from armbench!")
+    print('Hello from armbench!')

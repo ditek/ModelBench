@@ -4,7 +4,7 @@ from modelbench.jobs import Job
 
 
 class FakeRuntime:
-    name = "fake"
+    name = 'fake'
 
     def run(self, job: Job) -> list[float]:
         return [1.0, 1.1, 1.2]
@@ -15,4 +15,8 @@ class LocalDevice:
         self.name = name
 
     def probe(self) -> dict:
-        return {"cores": len(os.sched_getaffinity(0))}
+        return {'cores': len(os.sched_getaffinity(0))}
+
+
+DEVICE_KINDS = {'local': LocalDevice}
+RUNTIMES = {'fake': FakeRuntime}
