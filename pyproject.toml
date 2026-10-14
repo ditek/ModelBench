@@ -25,3 +25,7 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.17.0",
 ]
+
+[tool.ruff.lint]
+ignore = ["BLE001"]
+

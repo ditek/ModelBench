@@ -1,16 +1,7 @@
+from test_utils import make_job
+
 from modelbench.config import Config, DeviceConfig
-from modelbench.jobs import Job, expand
-
-
-def make_job(**kw):
-    base_job = {
-        "model": "mobilenet_v2",
-        "runtime": "fake",
-        "device": "local",
-        "precision": "fp32",
-        "threads": 1,
-    }
-    return Job(**{**base_job, **kw})
+from modelbench.jobs import expand
 
 
 def test_id_is_stable():

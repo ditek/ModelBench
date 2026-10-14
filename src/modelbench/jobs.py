@@ -27,7 +27,7 @@ class Job(BaseModel):
 def expand(conf: Config) -> list[Job]:
     return [
         Job(model=m, runtime=r, device=d.name, precision=p, threads=t)
-        for m, r, d, p, t in itertools.product(
-            conf.models, conf.runtimes, conf.devices, conf.precisions, conf.threads
+        for d, m, r, p, t in itertools.product(
+            conf.devices, conf.models, conf.runtimes, conf.precisions, conf.threads
         )
     ]
