@@ -1,5 +1,7 @@
 import argparse
+import sys
 import uuid
+from collections import Counter
 from pathlib import Path
 
 from modelbench.adapters import DEVICE_KINDS, RUNTIMES
@@ -7,6 +9,15 @@ from modelbench.config import load_config
 from modelbench.jobs import expand
 from modelbench.orchestrator import run_jobs
 from modelbench.results import Result
+from modelbench.stats import summarize
+
+
+def format_result(r: Result) -> str:
+    head = f'{r.job.id} {r.job.runtime:<6} {r.job.precision:<5} t={r.job.threads:<2}'
+    if r.status == 'ok':
+        s = summarize(r.latencies_ms)
+        return f'{head} ok      p50={s.p50:.2f} p95={s.p95:.2f} p99={s.p99:.2f} ms  {s.throughput:.0f}/s'
+    return f'{head} {r.status:<7} {r.reason}'
 
 
 def main():
@@ -44,4 +55,9 @@ def main():
         )
 
     for r in results:
-        print(r.job.id, r.status, r.reason or '')
+        print(format_result(r))
+    counts = Counter(r.status for r in results)
+    print(', '.join(f'{n} {status}' for status, n in sorted(counts.items())))
+
+    if counts['failed']:
+        sys.exit(1)

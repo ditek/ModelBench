@@ -15,6 +15,16 @@ dependencies = [
 [project.scripts]
 modelbench = "modelbench.cli:main"
 
+[project.optional-dependencies]
+bench = [
+    "numpy>=2.2.6",
+    "onnx>=1.23.2",
+    "onnxruntime>=1.23.2",
+    "onnxscript>=0.7.2",
+    "torch>=2.14.1",
+    "torchvision>=0.29.1",
+]
+
 [build-system]
 requires = ["uv_build>=0.12.21,<0.13.0"]
 build-backend = "uv_build"
@@ -31,3 +41,12 @@ ignore = ["BLE001"]
 
 [tool.ruff.format]
 quote-style = "single"
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu" }]
+torchvision = [{ index = "pytorch-cpu" }]

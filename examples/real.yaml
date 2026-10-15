@@ -1,0 +1,7 @@
+models: [mobilenet_v2]
+runtimes: [ort]
+devices:
+  - name: local
+    kind: local
+precisions: [fp32]
+threads: [1, 2]

@@ -18,5 +18,11 @@ class LocalDevice:
         return {'cores': len(os.sched_getaffinity(0))}
 
 
+def _ort():
+    from modelbench.ort_runtime import OrtRuntime
+
+    return OrtRuntime()
+
+
 DEVICE_KINDS = {'local': LocalDevice}
-RUNTIMES = {'fake': FakeRuntime}
+RUNTIMES = {'fake': FakeRuntime, 'ort': _ort}
