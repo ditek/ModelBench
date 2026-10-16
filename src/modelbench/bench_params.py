@@ -1,0 +1,2 @@
+WARMUP = 10
+REPEATS = 100

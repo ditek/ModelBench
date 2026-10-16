@@ -7,6 +7,7 @@ models/
 
 *.py[oc]
 *.egg-info
+*.jsonl
 
 # Virtual environments
 .venv

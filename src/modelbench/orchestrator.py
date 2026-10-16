@@ -6,13 +6,13 @@ def run_jobs(jobs: list[Job], device, runtime, run_id: str) -> list[Result]:
     meta = device.probe()
     results = []
     for job in jobs:
-        if job.threads > meta['cores']:
+        if job.threads > meta['logical_cpus']:
             results.append(
                 Result(
                     run_id=run_id,
                     job=job,
                     status='skipped',
-                    reason=f'requested {job.threads} threads, device has {meta["cores"]} cores',
+                    reason=f'requested {job.threads} threads, device has {meta["logical_cpus"]} cores',
                     device_metadata=meta,
                 )
             )

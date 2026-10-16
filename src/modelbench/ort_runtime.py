@@ -4,10 +4,8 @@ from pathlib import Path
 import numpy as np
 import onnxruntime as ort
 
+import modelbench.bench_params as params
 from modelbench.jobs import Job
-
-WARMUP = 10
-REPEATS = 100
 
 
 class OrtRuntime:
@@ -31,11 +29,11 @@ class OrtRuntime:
         input_name = session.get_inputs()[0].name
         x = np.random.default_rng(0).standard_normal((1, 3, 224, 224), dtype=np.float32)
 
-        for _ in range(WARMUP):
+        for _ in range(params.WARMUP):
             session.run(None, {input_name: x})
 
         latencies = []
-        for _ in range(REPEATS):
+        for _ in range(params.REPEATS):
             t0 = time.perf_counter_ns()
             session.run(None, {input_name: x})
             t1 = time.perf_counter_ns()

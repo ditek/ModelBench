@@ -1,5 +1,5 @@
 models: [mobilenet_v2]
-runtimes: [ort]
+runtimes: [ort, torch]
 devices:
   - name: local
     kind: local

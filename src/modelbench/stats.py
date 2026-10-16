@@ -25,3 +25,17 @@ def summarize(latencies: list[float]) -> ResultSummary:
         max=max(latencies),
         throughput=1000 / avg,
     )
+
+
+def get_cpu_model() -> str:
+    import json
+    import subprocess
+
+    output = subprocess.check_output(['lscpu', '-J'], text=True)
+    data = json.loads(output)
+
+    return next(
+        item['data']
+        for item in data['lscpu']
+        if item['field'].strip().rstrip(':') == 'Model name'
+    )

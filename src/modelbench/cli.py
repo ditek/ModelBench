@@ -26,6 +26,7 @@ def main():
     run = sub.add_parser('run')
     run.add_argument('config', type=Path)
     run.add_argument('--dry-run', action='store_true')
+    run.add_argument('--out', type=Path)
     args = parser.parse_args()
     conf = load_config(args.config)
     jobs = expand(conf)
@@ -56,6 +57,10 @@ def main():
 
     for r in results:
         print(format_result(r))
+    if args.out:
+        with args.out.open('w') as f:
+            for r in results:
+                f.write(r.model_dump_json() + '\n')
     counts = Counter(r.status for r in results)
     print(', '.join(f'{n} {status}' for status, n in sorted(counts.items())))
 
