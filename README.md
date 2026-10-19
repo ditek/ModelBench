@@ -2,7 +2,7 @@
 
 [![commit-checks](https://github.com/ditek/modelbench/actions/workflows/commit-check.yaml/badge.svg?branch=master)](https://github.com/ditek/modelbench/actions/workflows/commit-check.yaml)
 
-A small, config-driven harness for benchmarking ML inference across runtimes and devices. It runs the same model on ONNX Runtime and PyTorch, on the local machine and on remote Linux targets over SSH, and reports latency percentiles together with the device context needed to interpret them. The harness is not tied to any CPU architecture. During development it was tested on x86-64 and on an Arm Ampere A1.
+A small harness for benchmarking ML inference across runtimes and devices. It runs the same model on ONNX Runtime and PyTorch, on the local machine and on remote Linux targets over SSH, and reports latency percentiles together with the device context needed to interpret them. The harness is not tied to any CPU architecture. During development it was tested on x86-64 and on an Arm Ampere A1.
 
 **Status:** work in progress. See [Limitations](#limitations-and-next-steps).
 
@@ -57,14 +57,14 @@ Replace the host and `user` in the template with the actual values. Use absolute
 
 ## Sample results
 
-These runs used two targets: the local x86-64 laptop and an Arm VM reached over SSH. MobileNetV2, fp32, batch size 1, 10 warm-up and 100 timed iterations per job. The table shows the p50 latency in ms as min-max over 3 repeated runs of the same config.
+These runs used two targets: a local x86-64 laptop and an Arm VM reached over SSH. MobileNetV2, fp32, batch size 1, 10 warm-up and 100 timed iterations per job. The table shows the p50 latency in ms as min-max over 3 repeated runs of the same config.
 
 | Device | Runtime | Threads | p50 (ms) |
 |---|---|---|---|
-| x86-64 laptop (i7-1185G7, WSL2) | ORT | 1 | 9.8 - 12.8 |
-| x86-64 laptop | ORT | 2 | 7.9 - 10.0 |
-| x86-64 laptop | PyTorch | 1 | 24.9 - 28.5 |
-| x86-64 laptop | PyTorch | 2 | 25.5 - 30.8 |
+| x86-64 (i7-1185G7, WSL2) | ORT | 1 | 9.8 - 12.8 |
+| x86-64 | ORT | 2 | 7.9 - 10.0 |
+| x86-64 | PyTorch | 1 | 24.9 - 28.5 |
+| x86-64 | PyTorch | 2 | 25.5 - 30.8 |
 | Ampere A1 (Neoverse N1, 1 vCPU) | ORT | 1 | 27.4 - 28.2 |
 | Ampere A1 | PyTorch | 1 | 44.5 - 45.3 |
 
