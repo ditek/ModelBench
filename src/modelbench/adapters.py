@@ -82,6 +82,7 @@ class SshDevice:
         inputs = '\n'.join(job.model_dump_json() for job in jobs) + '\n'
         timeout_s = 90 + 20 * len(jobs)
         stdout, error = '', None
+        ret = None
         try:
             q = shlex.quote
             remote = f'cd {q(str(self.remote_dir))} && {q(self.uv_path)} run --locked --extra bench modelbench worker --run-id {q(run_id)}'
@@ -104,7 +105,7 @@ class SshDevice:
             )
             stdout = ret.stdout
             if ret.returncode != 0:
-                error = f'ssh exited with {ret.returncode}: {ret.stderr[-300:]}'
+                error = f'ssh exited with {ret.returncode}: {ret.stderr.strip()[-300:]}'
         except subprocess.TimeoutExpired:
             error = f'timed out after {timeout_s}s'
         except OSError as e:
@@ -122,7 +123,11 @@ class SshDevice:
                 continue
             results.append(r)
         result_map = {r.job.id: r for r in results}
-        reason = error or 'no result returned from worker'
+        reason = error
+        if reason is None:
+            reason = 'no result returned from worker'
+            if ret is not None and ret.stderr.strip():
+                reason += f'; stderr: {ret.stderr.strip()[-300:]}'
         return [
             result_map.get(j.id)
             or Result(run_id=run_id, job=j, status='failed', reason=reason)
