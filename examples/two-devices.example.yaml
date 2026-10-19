@@ -1,0 +1,7 @@
+models: [mobilenet_v2]
+runtimes: [ort, torch]
+devices:
+  - {name: local, kind: local}
+  - {name: a1, kind: ssh, host: <a1-host>, remote_dir: /home/user/git/modelbench, uv_path: /home/user/.local/bin/uv}
+precisions: [fp32]
+threads: [1, 2]
