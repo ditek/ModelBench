@@ -142,5 +142,5 @@ def _torch():
     return PyTorchRuntime()
 
 
-DEVICE_KINDS = {'local': LocalDevice, 'a1': SshDevice}
+DEVICE_KINDS = {'local': LocalDevice, 'ssh': SshDevice}
 RUNTIMES = {'fake': FakeRuntime, 'ort': _ort, 'torch': _torch}

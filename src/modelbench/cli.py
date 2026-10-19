@@ -93,4 +93,5 @@ def main():
     worker.add_argument('--run-id', type=str)
     worker.set_defaults(func=handle_worker)
 
-    parser.parse_args()
+    args = parser.parse_args()
+    args.func(args)
