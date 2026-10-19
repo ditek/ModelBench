@@ -1,12 +1,13 @@
 from test_utils import make_job
 
 from modelbench.adapters import FakeRuntime, LocalDevice
+from modelbench.config import DeviceConfig
 from modelbench.orchestrator import run_jobs
 
 
 def test_run_jobs_ok():
     job = make_job()
-    device = LocalDevice(job.device)
+    device = LocalDevice(DeviceConfig(name=job.device, kind='local'))
     runtime = FakeRuntime()
     run_id = 'test_run_1'
     results = run_jobs([job], device, runtime, run_id)
@@ -23,7 +24,7 @@ def test_run_jobs_ok():
 
 def test_run_jobs_skipped():
     job = make_job(threads=99)
-    device = LocalDevice(job.device)
+    device = LocalDevice(DeviceConfig(name=job.device, kind='local'))
     runtime = FakeRuntime()
     run_id = 'test_run_2'
     results = run_jobs([job], device, runtime, run_id)

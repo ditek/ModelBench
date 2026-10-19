@@ -12,7 +12,7 @@ def run_jobs(jobs: list[Job], device, runtime, run_id: str) -> list[Result]:
                     run_id=run_id,
                     job=job,
                     status='skipped',
-                    reason=f'requested {job.threads} threads, device has {meta["logical_cpus"]} cores',
+                    reason=f'requested {job.threads} threads, device has {meta["logical_cpus"]} logical CPU(s)',
                     device_metadata=meta,
                 )
             )

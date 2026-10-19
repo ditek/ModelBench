@@ -2,12 +2,21 @@ from pathlib import Path
 from typing import Annotated, Literal
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class DeviceConfig(BaseModel):
     name: str
-    kind: Literal['local']
+    kind: Literal['local', 'ssh']
+    host: str | None = None
+    remote_dir: str | None = None
+    uv_path: str = 'uv'
+
+    @model_validator(mode='after')
+    def _ssh_needs_host(self):
+        if self.kind == 'ssh' and not (self.host and self.remote_dir):
+            raise ValueError("ssh devices require 'host' and 'remote_dir'")
+        return self
 
 
 class Config(BaseModel):
