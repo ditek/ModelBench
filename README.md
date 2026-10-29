@@ -4,8 +4,6 @@
 
 A small harness for benchmarking ML inference across runtimes and devices. It runs the same model on ONNX Runtime and PyTorch, on the local machine and on remote Linux targets over SSH, and reports latency percentiles together with the device context needed to interpret them. The harness is not tied to any CPU architecture. During development it was tested on x86-64 and on an Arm Ampere A1.
 
-**Status:** work in progress. See [Limitations](#limitations-and-next-steps).
-
 ## How it works
 
 <img src="docs/architecture.png" alt="modelbench architecture: a config file feeds an orchestrator, which runs jobs on a local device or sends them over SSH to a worker on a remote target" width="720">
@@ -79,8 +77,7 @@ Observations from these runs (causes not yet investigated):
 
 Known limitations:
 
-- Targets must be Linux (the CPU metadata and core-count checks use Linux interfaces). Only x86-64 and aarch64 have been tested.
-- fp32 only, and no accuracy check against a reference yet.
-- All jobs of a batch run in one process, so jobs can interfere with each other. One process per job is the planned fix.
+- Targets must be Linux (the CPU metadata and core-count checks use Linux interfaces).
+- Only x86-64 and aarch64 have been tested.
 
 Planned: results storage in InfluxDB with a Grafana dashboard, a regression gate in CI, and an adb adapter for Android.
